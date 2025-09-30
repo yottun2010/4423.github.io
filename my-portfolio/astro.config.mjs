@@ -1,30 +1,48 @@
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import { defineConfig } from 'astro/config';
-import { DEFAULT_LOCALE_SETTING, LOCALES_SETTING } from './src/locales';
+import { defineConfig } from 'astro/config'
+import mdx from '@astrojs/mdx'
+import tailwind from '@astrojs/tailwind'
+import sitemap from '@astrojs/sitemap'
+import { remarkReadingTime } from './src/utils/remarkReadingTime.ts'
+import remarkUnwrapImages from 'remark-unwrap-images'
+import rehypeExternalLinks from 'rehype-external-links'
+import expressiveCode from 'astro-expressive-code'
+import { expressiveCodeOptions } from './src/site.config'
+import icon from 'astro-icon'
+
+import vercel from '@astrojs/vercel/serverless'
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://astro-i18n-starter.pages.dev', // Set your site's URL
-  i18n: {
-    defaultLocale: DEFAULT_LOCALE_SETTING,
-    locales: Object.keys(LOCALES_SETTING),
-    routing: {
-      prefixDefaultLocale: true,
-      redirectToDefaultLocale: false,
-    },
-  },
-  integrations: [
-    mdx(),
-    sitemap({
-      i18n: {
-        defaultLocale: DEFAULT_LOCALE_SETTING,
-        locales: Object.fromEntries(
-          Object.entries(LOCALES_SETTING).map(
-            ([key, value]) => [key, value.lang ?? key]
-          )
-        ),
-      },
-    })
-  ],
-});
+	site: 'https://example.me',
+	integrations: [
+		expressiveCode(expressiveCodeOptions),
+		tailwind({
+			applyBaseStyles: false
+		}),
+		sitemap(),
+		mdx(),
+		icon()
+	],
+	markdown: {
+		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
+		rehypePlugins: [
+			[
+				rehypeExternalLinks,
+				{
+					target: '_blank',
+					rel: ['nofollow, noopener, noreferrer']
+				}
+			]
+		],
+		remarkRehype: {
+			footnoteLabelProperties: {
+				className: ['']
+			}
+		}
+	},
+	prefetch: true,
+	output: 'server',
+	adapter: vercel({
+		webAnalytics: { enabled: true }
+	})
+})

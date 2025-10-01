@@ -1,0 +1,10 @@
+﻿---
+import PortfolioPage from '@/components/PortfolioPage.astro'
+import { contentByLocale } from '@/data/portfolioContent'
+
+const locale = 'ja'
+const content = contentByLocale[locale]
+---
+
+<PortfolioPage {content} />
+

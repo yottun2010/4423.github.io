@@ -1,6 +1,17 @@
 ---
 import { cn } from '@/utils'
+
 const { as: Tag = 'a', class: className, title, href, style = 'button' } = Astro.props
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '')
+const isExternal = (value?: string) => value?.startsWith('http') || value?.startsWith('mailto:') || value?.startsWith('#')
+const resolvedHref = !href
+	? undefined
+	: isExternal(href)
+	?	 href
+	: href.startsWith('/')
+	? `${basePath}${href}`
+	: href
 ---
 
 <Tag
@@ -10,8 +21,8 @@ const { as: Tag = 'a', class: className, title, href, style = 'button' } = Astro
 		!href && 'cursor-default',
 		style === 'pill' && 'rounded-xl'
 	)}
-	href={href}
-	data-astro-prefetch
+	href={Tag === 'a' ? resolvedHref : undefined}
+	data-astro-prefetch={Tag === 'a' ? true : undefined}
 >
 	<slot name='icon-before' />
 	<p>{title}</p>

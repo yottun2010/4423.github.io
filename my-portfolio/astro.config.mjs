@@ -11,8 +11,8 @@ import icon from 'astro-icon'
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://4423.github.io',
-	base: '/',
+	site: 'https://yottun2010.github.io/4423.github.io',
+	base: '/4423.github.io',
 	integrations: [
 		expressiveCode(expressiveCodeOptions),
 		tailwind({

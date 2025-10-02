@@ -1,5 +1,8 @@
 ﻿---
-import { defaultLocale } from '@/data/portfolioContent'
+import PortfolioPage from '@/components/PortfolioPage.astro'
+import { contentByLocale, defaultLocale } from '@/data/portfolioContent'
 
-Astro.redirect(`/${defaultLocale}/`)
+const content = contentByLocale[defaultLocale]
 ---
+
+<PortfolioPage {content} />

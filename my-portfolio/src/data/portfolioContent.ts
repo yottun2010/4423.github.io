@@ -1,6 +1,6 @@
 ﻿export const supportedLocales = ['en', 'ja'] as const;
 export type Locale = (typeof supportedLocales)[number];
-export const defaultLocale: Locale = 'en';
+export const defaultLocale: Locale = 'ja';
 
 type ToolIconKey = 'unity' | 'vscode' | 'clipStudio' | 'aseprite';
 

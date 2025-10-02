@@ -7,19 +7,27 @@ interface Props {
 }
 
 const { nextUrl, prevUrl } = Astro.props
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '')
+const withBase = (path: string) =>
+	!path
+		? path
+		: path.startsWith('http') || path.startsWith('mailto:')
+		? path
+		: `${basePath}${path.startsWith('/') ? path : `/${path}`}`
 ---
 
 {
 	(prevUrl || nextUrl) && (
 		<nav class='mt-8 flex items-center gap-x-4'>
 			{prevUrl && (
-				<a class='me-auto py-2' data-astro-prefetch href={prevUrl.url}>
+				<a class='me-auto py-2' data-astro-prefetch href={withBase(prevUrl.url)}>
 					{prevUrl.srLabel && <span class='sr-only'>{prevUrl.srLabel}</span>}
 					{prevUrl.text ? prevUrl.text : 'Previous'}
 				</a>
 			)}
 			{nextUrl && (
-				<a class='ms-auto py-2' data-astro-prefetch href={nextUrl.url}>
+				<a class='ms-auto py-2' data-astro-prefetch href={withBase(nextUrl.url)}>
 					{nextUrl.srLabel && <span class='sr-only'>{nextUrl.srLabel}</span>}
 					{nextUrl.text ? nextUrl.text : 'Next'}
 				</a>

@@ -38,6 +38,9 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Disable Jekyll on GitHub Pages
+        run: touch dist/.nojekyll
+
       - name: Upload build output
         uses: actions/upload-pages-artifact@v3
         with:

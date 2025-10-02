@@ -9,16 +9,16 @@ export const siteConfig: SiteConfig = {
 	// Meta property used as the default description meta property
 	description: 'The official Astro Resume Theme',
 	// HTML lang property, found in src/layouts/Base.astro L:18
-	lang: 'en-GB',
+	lang: 'ja-JP',
 	// Meta property, found in src/components/BaseHead.astro L:42
-	ogLocale: 'en_GB',
+	ogLocale: 'ja_JP',
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {
-		locale: 'en-GB',
+		locale: 'ja-JP',
 		options: {
-			day: 'numeric',
-			month: 'short',
-			year: 'numeric'
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
 		}
 	}
 }
